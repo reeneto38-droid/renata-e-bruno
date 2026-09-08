@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosso Álbum ❤️</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #fff5f7, #ffe4eb);
+  color: #4a2730;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 45px 20px 30px;
+}
+
+header h1 {
+  font-family: Georgia, serif;
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+header p {
+  font-size: 16px;
+  opacity: .8;
+}
+
+.heart {
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
+.album {
+  width: 92%;
+  max-width: 900px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  padding-bottom: 40px;
+}
+
+.card {
+  position: relative;
+  min-height: 230px;
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(100, 30, 50, .15);
+  background: #f8dce3;
+  transition: transform .25s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
+  object-fit: cover;
+  display: block;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 45%, rgba(0,0,0,.65));
+}
+
+.card-title {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  right: 18px;
+  z-index: 2;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 15, 22, .82);
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-box {
+  background: #fff8fa;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 25px;
+  padding: 28px;
+  text-align: center;
+  animation: aparecer .25s ease;
+}
+
+.modal-box h2 {
+  font-family: Georgia, serif;
+  margin-bottom: 15px;
+  font-size: 27px;
+}
+
+.modal-box p {
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.close {
+  margin-top: 22px;
+  border: none;
+  background: #b84d68;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 10px 20px 45px;
+  font-family: Georgia, serif;
+  font-size: 18px;
+}
+
+@keyframes aparecer {
+  from {
+    transform: scale(.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .album {
+    grid-template-columns: 1fr;
+  }
+
+  header h1 {
+    font-size: 32px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="heart">❤️</div>
+  <h1>Nosso Álbum</h1>
+  <p>Algumas das memórias mais lindas da nossa história</p>
+</header>
+
+<main class="album">
+
+  <div class="card" onclick="abrir(0)">
+    <img src="foto1.jpg" alt="Nossa história">
+    <div class="card-title">Abra quando quiser lembrar de nós ❤️</div>
+  </div>
+
+  <div class="card" onclick="abrir(1)">
+    <img src="foto2.jpg" alt="Momentos">
+    <div class="card-title">Abra quando sentir saudade 🥹</div>
+  </div>
+
+  <div class="card" onclick="abrir(2)">
+    <img src="foto3.jpg" alt="Viagens">
+    <div class="card-title">Abra para lembrar das nossas viagens ✈️</div>
+  </div>
+
+  <div class="card" onclick="abrir(3)">
+    <img src="foto4.jpg" alt="Momentos especiais">
+    <div class="card-title">Abra quando precisar sorrir 💕</div>
+  </div>
+
+  <div class="card" onclick="abrir(4)">
+    <img src="foto5.jpg" alt="Amor">
+    <div class="card-title">Abra quando esquecer o quanto é amado ❤️</div>
+  </div>
+
+  <div class="card" onclick="abrir(5)">
+    <img src="foto6.jpg" alt="Nós dois">
+    <div class="card-title">Abra quando quiser lembrar do nosso começo 🥰</div>
+  </div>
+
+</main>
+
+<footer>
+  Feito com amor, para nós dois. ❤️
+</footer>
+
+<div class="modal" id="modal" onclick="fecharFora(event)">
+  <div class="modal-box">
+    <h2 id="titulo"></h2>
+    <p id="mensagem"></p>
+    <button class="close" onclick="fechar()">Fechar ❤️</button>
+  </div>
+</div>
+
+<script>
+const textos = [
+  {
+    titulo: "Quando quiser lembrar de nós ❤️",
+    mensagem: "Entre tantos caminhos que a vida poderia ter escolhido, ela fez nossos caminhos se encontrarem. E desde então, cada momento ao seu lado se tornou parte da minha história favorita."
+  },
+  {
+    titulo: "Quando sentir saudade 🥹",
+    mensagem: "Se a saudade apertar, lembra de tudo que já vivemos juntos. Dos abraços, das risadas, das conversas e de todos aqueles pequenos momentos que só nós dois entendemos."
+  },
+  {
+    titulo: "Nossas viagens ✈️",
+    mensagem: "Uruguai, Santa Catarina e tantos lugares que ainda vamos conhecer. O melhor das viagens nunca foi somente o destino, mas ter você ao meu lado para viver cada aventura."
+  },
+  {
+    titulo: "Quando precisar sorrir 💕",
+    mensagem: "Lembra das nossas risadas, das nossas brincadeiras e de todas as vezes que transformamos um momento simples em uma lembrança inesquecível."
+  },
+  {
+    titulo: "Nunca esqueça ❤️",
+    mensagem: "Você é uma das pessoas mais importantes da minha vida. Obrigada por estar comigo, por me escolher e por construir essa história ao meu lado."
+  },
+  {
+    titulo: "O nosso começo 🥰",
+    mensagem: "Olhar para trás e perceber tudo o que construímos me faz ter ainda mais certeza de que quero continuar vivendo muitos capítulos dessa história com você."
+  }
+];
+
+function abrir(i) {
+  document.getElementById("titulo").innerText = textos[i].titulo;
+  document.getElementById("mensagem").innerText = textos[i].mensagem;
+  document.getElementById("modal").classList.add("active");
+}
+
+function fechar() {
+  document.getElementById("modal").classList.remove("active");
+}
+
+function fecharFora(event) {
+  if (event.target.id === "modal") {
+    fechar();
+  }
+}
+</script>
+
+</body>
+</html>
